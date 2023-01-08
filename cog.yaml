@@ -1,0 +1,12 @@
+build:
+  gpu: true
+  python_version: "3.8"
+  python_packages:
+    - git+https://github.com/openai/whisper.git 
+    - stable-ts
+    - ffmpeg-python
+  system_packages:
+    - "ffmpeg"
+    - "libsndfile1"
+predict: "predict.py:Predictor"
+image: "r8.im/cameronk/whisper-stable"
