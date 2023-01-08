@@ -24,7 +24,7 @@ class Predictor(BasePredictor):
         stabilize_timestamps: bool = Input(description="Stabilize timestamps", default=True),
     ) -> Any:
         _whisper = self.get_model(model)
-        result = _whisper.transcribe(audio) # segments, transcription, detected_language
+        result = _whisper.transcribe(str(audio)) # segments, transcription, detected_language
         
         if stabilize_timestamps:
             result['segments'] = stabilize_timestamps(result, top_focus=True)
