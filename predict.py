@@ -2,7 +2,7 @@ from typing import Any, List
 
 import numpy as np
 from cog import BasePredictor, Input, Path, BaseModel
-from stable_whisper import load_model
+from stable_whisper import load_model, stabilize_timestamps
 import whisper
 
 class Predictor(BasePredictor):
@@ -21,12 +21,11 @@ class Predictor(BasePredictor):
         self,
         audio: Path = Input(description="Audio to transcribe"),
         model: str = Input(description="Whisper model to use", choices=whisper.available_models()),
-        stabilize_timestamps: bool = Input(description="Stabilize timestamps", default=True),
+        stabilize: bool = Input(description="Stabilize timestamps", default=True),
     ) -> Any:
         _whisper = self.get_model(model)
         result = _whisper.transcribe(str(audio)) # segments, transcription, detected_language
         
-        if stabilize_timestamps:
-            result['segments'] = stabilize_timestamps(result, top_focus=True)
+        if stabilize: result['segments'] = stabilize_timestamps(result, top_focus=True)
         
         return result
