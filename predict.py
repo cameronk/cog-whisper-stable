@@ -22,7 +22,7 @@ class Predictor(BasePredictor):
         audio: Path = Input(description="Audio to transcribe"),
         model: str = Input(description="Whisper model to use", choices=whisper.available_models(), default="base"),
         language: str = Input(description="language spoken in the audio, specify None to perform language detection", default=None),
-        temperature : float = Input(description="temperature to use for sampling", default=None),
+        temperature : float = Input(description="temperature to use for sampling", default=0.0),
         stabilize: bool = Input(description="Stabilize timestamps", default=True),
     ) -> Any:
         _whisper = self.get_model(model)
